@@ -36,18 +36,18 @@ fun eval (c, insns) {
 fun evalInsn([stack, st, w], i) {
   case i of
       READ       -> case readWorld(w) of
-        [n, nw] -> [n : stack, st, nw]
-      esac
+                      [n, nw] -> [n : stack, st, nw]
+                    esac
     | WRITE      -> case stack of
-      n : ns -> [ns, st, writeWorld (n, w)]
-    esac
+                      n : ns -> [ns, st, writeWorld (n, w)]
+                    esac
     | BINOP (op) -> case stack of
-      n2 : n1 : ns -> [evalOp(op, n1, n2) : ns, st, w]
-    esac
+                      n2 : n1 : ns -> [evalOp(op, n1, n2) : ns, st, w]
+                    esac
     | LD (x)     -> [(st (x)) : stack, st, w]
     | ST (x)     -> case stack of
-      n : ns -> [ns, st <- [x, n], w]
-    esac
+                      n : ns -> [ns, st <- [x, n], w]
+                    esac
     | CONST (n)  -> [n : stack, st, w]
   esac
 }
